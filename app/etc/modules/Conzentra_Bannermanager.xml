@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Conzentra_Bannermanager>
+      <active>true</active>
+      <codePool>local</codePool>
+      <version>0.1.0</version>
+    </Conzentra_Bannermanager>
+  </modules>
+</config>
