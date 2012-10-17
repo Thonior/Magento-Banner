@@ -67,6 +67,20 @@ class Conzentra_Bannermanager_Adminhtml_BannerController extends Mage_Adminhtml_
 
 
 				if ($post_data) {
+                                    if(isset($post_data['stores'])) {
+                                        $stores = $post_data['stores'];
+                                        $storesCount = count($stores);
+                                        $storesIndex = 1;
+                                        $storesData = '';
+                                        foreach($stores as $store) {
+                                            $storesData .= $store;
+                                            if($storesIndex < $storesCount) {
+                                                $storesData .= ',';
+                                            }
+                                            $storesIndex++;
+                                        }
+                                        $post_data['store_id'] = $storesData;
+                                    }
 
 					try {
 

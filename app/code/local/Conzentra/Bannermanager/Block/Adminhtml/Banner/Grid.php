@@ -31,6 +31,16 @@ class Conzentra_Bannermanager_Block_Adminhtml_Banner_Grid extends Mage_Adminhtml
 				"align" =>"left",
 				"index" => "name",
 				));
+                                $this->addColumn("status",array(
+                                "header" => Mage::helper("bannermanager")->__("Status"),
+                                "align" => "left",
+                                "index" => "status",
+                                ));
+                                $this->addColumn("description",array(
+                                "header" => Mage::helper("bannermanager")->__("Description"),
+                                "align" => "left",
+                                "index" => "description",
+                                ));
 
 
 				return parent::_prepareColumns();
