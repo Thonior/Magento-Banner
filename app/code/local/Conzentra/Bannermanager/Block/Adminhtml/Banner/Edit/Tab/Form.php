@@ -14,11 +14,11 @@ class Conzentra_Bannermanager_Block_Adminhtml_Banner_Edit_Tab_Form extends Mage_
 				"required" => true,
 				"name" => "name",
 				));
-                                $fieldset->addField("status", "checkbox", array(
-				"label" => Mage::helper("bannermanager")->__("Status"),
+                                $fieldset->addField("status", "select", array(
+				"label" => Mage::helper("bannermanager")->__("Enabled"),
 				"class" => "",
 				"required" => false,
-                                "value" => 1,
+                                "values" => array("No","Yes"),
 				"name" => "status",
 				));
                                 $fieldset->addField("description", "text", array(
