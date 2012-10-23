@@ -27,6 +27,13 @@ class Conzentra_Bannermanager_Block_Adminhtml_Banner_Edit_Tab_Form extends Mage_
 				"required" => true,
 				"name" => "description",
 				));
+                                $fieldset->addField("position", "select", array(
+				"label" => Mage::helper("bannermanager")->__("Position"),
+				"class" => "",
+				"required" => true,
+                                "values" => array("Top" => "Top","Left" => "Left","Right" => "Right","Bottom" => "Bottom"),
+				"name" => "position",
+				));
                                 $fieldset->addField("width", "text", array(
 				"label" => Mage::helper("bannermanager")->__("Width"),
 				"class" => "",
@@ -43,7 +50,7 @@ class Conzentra_Bannermanager_Block_Adminhtml_Banner_Edit_Tab_Form extends Mage_
 				"label" => Mage::helper("bannermanager")->__("Behaviour"),
 				"class" => "required-entry",
 				"required" => true,
-                                "values" => array("Static","Ordered","Random"),
+                                "values" => array("Static" => "Static","Ordered" => "Ordered","Random" => "Random"),
 				"name" => "behaviour",
 				));
                                 if (!Mage::app()->isSingleStoreMode()) {

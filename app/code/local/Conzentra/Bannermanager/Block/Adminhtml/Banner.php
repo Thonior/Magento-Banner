@@ -13,5 +13,5 @@ class Conzentra_Bannermanager_Block_Adminhtml_Banner extends Mage_Adminhtml_Bloc
 	parent::__construct();
 
 	}
-
+        
 }

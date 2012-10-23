@@ -67,15 +67,32 @@ class Conzentra_Bannermanager_Adminhtml_BanneritemController extends Mage_Adminh
 
 
 				if ($post_data && $_FILES) {
+                                        if(isset($post_data['stores'])) {
+                                        $stores = $post_data['stores'];
+                                        $storesCount = count($stores);
+                                        $storesIndex = 1;
+                                        $storesData = '';
+                                        foreach($stores as $store) {
+                                            $storesData .= $store;
+                                            if($storesIndex < $storesCount) {
+                                                $storesData .= ',';
+                                            }
+                                            $storesIndex++;
+                                        }
+                                        //echo $storesData;die;
+                                        $post_data['store_id'] = $storesData;
+                                        }
                                         //echo "<pre>";print_r($post_data);die;
 					try {   
-                                                $item=$_FILES['item_url'];
-                                                $target_path = "media/banners/";
+                                                if($_FILES['item_url']){
+                                                    $item=$_FILES['item_url'];
+                                                    $target_path = "media/banners/";
 
-                                                $target_path = $target_path . basename( $post_data['id_banner'].$item['name']); 
-                                                move_uploaded_file($item['tmp_name'], $target_path);
-                                                
-                                                $post_data['item_url']=$post_data['id_banner'].$item['name'];
+                                                    $target_path = $target_path . basename( $post_data['id_banner'].$item['name']); 
+                                                    move_uploaded_file($item['tmp_name'], $target_path);
+
+                                                    $post_data['item_url']=$post_data['id_banner'].$item['name'];
+                                                }
 						$brandsModel = Mage::getModel("bannermanager/banneritem")
 						->addData($post_data)
 						->setId($this->getRequest()->getParam("id"))

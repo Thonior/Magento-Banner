@@ -20,8 +20,8 @@ class Conzentra_Bannermanager_Block_Adminhtml_Banneritem_Edit_Tab_Form extends M
 				));
                                 $fieldset->addField("item_url", "file", array(
 				"label" => Mage::helper("bannermanager")->__("Item"),
-				"class" => "required-entry",
-				"required" => true,
+				"class" => "",
+				"required" => false,
 				"name" => "item_url",
 				));
                                 $fieldset->addField("description", "text", array(
@@ -36,11 +36,10 @@ class Conzentra_Bannermanager_Block_Adminhtml_Banneritem_Edit_Tab_Form extends M
 				"required" => true,
 				"name" => "destination_url",
 				));
-                                $fieldset->addField("position", "select", array(
-				"label" => Mage::helper("bannermanager")->__("Position"),
+                                $fieldset->addField("position", "text", array(
+				"label" => Mage::helper("bannermanager")->__("Order"),
 				"class" => "",
-				"required" => true,
-                                "values" => array("Top","Left","Right","Bottom"),
+				"required" => false,
 				"name" => "position",
 				));
                                 $fieldset->addField("status", "select", array(
@@ -50,6 +49,22 @@ class Conzentra_Bannermanager_Block_Adminhtml_Banneritem_Edit_Tab_Form extends M
                                 "values" => array("No","Yes"),
 				"name" => "status",
 				));
+                                if (!Mage::app()->isSingleStoreMode()) {
+                                    $fieldset->addField('store_id', 'multiselect', array(
+                                            'name'      => 'stores[]',
+                                            'label'     => Mage::helper('bannermanager')->__('Store View'),
+                                            'title'     => Mage::helper('bannermanager')->__('Store View'),
+                                            'required'  => true,
+                                            'values'    => Mage::getSingleton('adminhtml/system_store')->getStoreValuesForForm(false, true),
+                                    ));
+                                }
+                                else {
+                                    $fieldset->addField('store_id', 'hidden', array(
+                                            'name'      => 'stores[]',
+                                            'value'     => Mage::app()->getStore(true)->getId()
+                                    ));
+                                    //$model->setStoreId(Mage::app()->getStore(true)->getId());
+                                }
 
 
 
