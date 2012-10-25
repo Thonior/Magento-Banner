@@ -1,0 +1,105 @@
+<?php $position = $this->getBannerPosition(); ?>
+<?php $banner = $this->getBanner($position); ?>
+
+<?php if($position == 'Top'): ?>
+    <?php if($banner):?>
+        <?php foreach($banner as $ban):?>
+            <?php if(Mage::helper('bannermanager')->isBannerInStore($ban->getId())):?>
+            <?php $items = $this->getItems($ban->getId()); ?>
+            <?php if($ban->getBehaviour()!= "Static"):?>
+                
+                <div id="Bck_galeria_img">
+                    <div id="Generalvisor"  style="overflow: hidden;">
+            <!--img id="GeneralImage" /-->
+                        <div id="GeneralImage"  ></div>
+                    </div>      
+                    <div id="Bck_list_img">
+                        <ul>
+                            <?php foreach($items as $item): ?>
+                                <?php if(Mage::helper('bannermanager')->isItemInStore($item->getId())):?>
+                                <li><a href="<?php echo $item->getDestination_url(); ?>" target="_blank">
+                                        <img alt="<?php echo $item->getDescription(); ?>" title="<?php echo $item->getDescription();?>"  src="media/banners/<?php echo $item->getItem_url();?>" <?php if($ban->getWidth()):?>width="<?php echo $ban->getWidth(); ?>"<?php endif;?> <?php if($ban->getHeight()):?>height="<?php echo $ban->getHeight(); ?>"<?php endif;?> /></a></li>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>  
+                </div>  
+                <span class="banner" >
+                    <div <?php if(!$ban->getArrows()): ?> style="display:none;" <?php endif;?>>
+                    <ul class="btn_desp">
+                        <li><img id="PreviewImage" src="media/banners/buttons/Btn_Izq.png"></li>
+                         <li><a id="LinkImage" class="linkImage"><img id="LinkImages" src="media/banners/buttons/transpix.png"></a></li>
+                        <li><img id="NextImage" src="media/banners/buttons//Btn_Der.png"></li>
+                    </ul>
+                    </div>
+                    <!-- Botones galeria. -->
+                    <ul id="Selector"  class="Bck_list_btn"></ul> 
+                    <!-- Botones galeria. -->
+                    
+                </span>
+            <?php else: ?>
+                <div id="Bck_galeria_img">
+                    
+                    <?php foreach($items as $item): ?>
+                        <?php if(Mage::helper('bannermanager')->isItemInStore($item->getId())):?>
+                        <?php $img = $item; ?>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                    <div id="Generalvisor">
+                            <img id="GeneralImage" src="media/banners/<?php echo $img->getItem_url();?>" />
+                    </div>
+                </div>
+            <?php endif;?>
+            <?php endif; ?>
+        <?php endforeach;?>
+    <?php endif; ?>
+
+<?php elseif($position == 'Left'):?>
+    <?php if($banner):?>
+        <?php foreach($banner as $ban):?>
+            <?php if(Mage::helper('bannermanager')->isBannerInStore($ban->getId())):?>
+            <?php $items = $this->getItems($ban->getId()); ?>
+                <?php foreach($items as $item): ?>
+                    <?php if(Mage::helper('bannermanager')->isItemInStore($item->getId())):?>
+                    <div class="block block-list">
+                        <div class="block-content">
+                            <a target="_blank" href="<?php echo $item->getDestination_url();?>">
+                                <img title="<?php echo $item->getDescription(); ?>" alt="<?php echo $item->getDescription(); ?>" src="media/banners/<?php echo $item->getItem_url(); ?>" <?php if($ban->getWidth()):?>width="<?php echo $ban->getWidth(); ?>"<?php endif;?> <?php if($ban->getHeight()):?>height="<?php echo $ban->getHeight(); ?>"<?php endif;?>/>
+                            </a>
+                        </div>
+                    </div>
+                    <?php endif;?>
+                <?php endforeach; ?>
+                <?php endif;?>
+        <?php endforeach;?>
+    <?php endif; ?>
+<?php elseif($position == 'Right'): ?>
+    <?php if($banner):?>
+        <?php foreach($banner as $ban):?>
+            <?php if(Mage::helper('bannermanager')->isBannerInStore($ban->getId())):?>
+            <?php $items = $this->getItems($ban->getId()); ?>
+                <?php foreach($items as $item): ?>
+                    <?php if(Mage::helper('bannermanager')->isItemInStore($item->getId())):?>
+                    <div class="block block-list">
+                        <div class="block-content">
+                            <a target="_blank" href="<?php echo $item->getDestination_url();?>">
+                                <img title="<?php echo $item->getDescription(); ?>" alt="<?php echo $item->getDescription(); ?>" src="media/banners/<?php echo $item->getItem_url(); ?>" <?php if($ban->getWidth()):?>width="<?php echo $ban->getWidth(); ?>"<?php endif;?> <?php if($ban->getHeight()):?>height="<?php echo $ban->getHeight(); ?>"<?php endif;?>/></a>
+                        </div>
+                    </div>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+                <?php endif; ?>
+        <?php endforeach;?>
+    <?php endif; ?>
+<?php else: ?>
+    <?php if($banner):?>
+        <?php foreach($banner as $ban):?>
+            <?php $items = $this->getItems($ban->getId()); ?>
+                <?php foreach($items as $item): ?>
+                    <div style="display:none;">
+                        <?php echo $item->getId();?>
+                    </div>
+                <?php endforeach; ?>
+        <?php endforeach;?>
+    <?php endif; ?>
+<?php endif; ?>

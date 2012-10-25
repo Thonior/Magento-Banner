@@ -1,0 +1,49 @@
+<?xml version="1.0"?>   
+<layout version="0.1.0">   
+  <bannermanager_index_index>   
+    <reference name="root">   
+      <action method="setTemplate"><template>page/1column.phtml</template></action>   
+    </reference>   
+    <reference name="content">   
+      <block type="bannermanager/index" name="bannermanager_index" template="bannermanager/index.phtml"/>   
+    </reference>   
+  </bannermanager_index_index> 
+  
+<default>
+<!--    <reference name="head">
+        <action method="addJs"></action>
+    </reference>-->
+    <reference name="top.container">
+        
+        <block before="" type="bannermanager/index" name="top-banner" as="topbanner" template="banner/page/banner.phtml" >
+<!--        <action method="addJs"><script>jquery/jslide.gallery.js</script></action>
+            <action method="addJs"><script>jquery/jquery.easing.js</script></action>
+            <action method="addJs"><script>jquery/jquery-1.7.2.min.js</script></action>-->
+            <action method="setBannerPosition" >
+                <value>Top</value>
+            </action> 
+            
+        </block>
+    </reference>
+    <reference name="left">
+        <block before="" type="bannermanager/index" name="left-banner" as="leftbanner" template="banner/page/banner.phtml" >
+            <action method="setBannerPosition" ><value>Left</value></action> 
+        </block>
+    </reference>
+    <reference name="right">
+        <block before="" type="bannermanager/index" name="right-banner" as="rightbanner" template="banner/page/banner.phtml" >
+            <action method="setBannerPosition" >
+                <value>Right</value>
+            </action> 
+        </block>
+    </reference>
+    <reference name="footer">
+        <block before="" type="bannermanager/index" name="bot-banner" as="botbanner" template="banner/page/banner.phtml" >
+            <action method="setBannerPosition" ><value>Bot</value></action> 
+        </block>
+    </reference>
+</default>
+  
+    
+</layout>   
+	

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+  <bannermanager_adminhtml_banner_index>
+	<reference name="content">
+	  <block type="bannermanager/adminhtml_banner" name="banner" />
+	</reference>
+  </bannermanager_adminhtml_banner_index>
+  <bannermanager_adminhtml_banneritem_index>
+	<reference name="content">
+	  <block type="bannermanager/adminhtml_banneritem" name="banneritem" />
+	</reference>
+  </bannermanager_adminhtml_banneritem_index>
+</layout>
