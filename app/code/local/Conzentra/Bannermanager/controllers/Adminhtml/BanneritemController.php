@@ -65,8 +65,30 @@ class Conzentra_Bannermanager_Adminhtml_BanneritemController extends Mage_Adminh
 
 			$post_data=$this->getRequest()->getPost();
 
-
+                                //print_r($post_data['stores']);die;
 				if ($post_data && $_FILES) {
+                                        //Si el banner es estático no debe de haber más de un item activado en la misma tienda
+                                        $valid = true;
+                                        $bannerscollection = Mage::getModel('bannermanager/banner')->getCollection();
+                                        //$bannerscollection->addFieldToFilter('id',$post_data['banner_id']);
+                                        $banner = $bannerscollection->getLastItem();
+                                        if($banner->getBehaviour()=='Static'){
+                                            $collection = Mage::getModel('bannermanager/banneritem')->getCollection();
+                                            $collection->addFieldToFilter('id_banner',$post_data['id_banner']);
+                                            $collection->addFieldToFilter('status',1);
+                                            $items = $collection;
+                                            $newStores = $post_data[stores];
+                                            foreach ($items as $item){
+                                                $itemStores = $item->getStoreId();
+                                                $stores = explode(',', $itemStores);
+                                                foreach($newStores as $store){
+                                                    if(in_array($store, $stores) || in_array(0, $stores))
+                                                        $valid = false;
+                                                }
+                                            }
+                                        }
+                                        
+                                        //
                                         if(isset($post_data['stores'])) {
                                         $stores = $post_data['stores'];
                                         $storesCount = count($stores);
@@ -84,7 +106,14 @@ class Conzentra_Bannermanager_Adminhtml_BanneritemController extends Mage_Adminh
                                         }
                                         //echo "<pre>";print_r($post_data);die;
 					try {   
-                                                if($_FILES['item_url']){
+                                                if(!$valid){
+                                                    Mage::getSingleton("adminhtml/session")->addError("You cannot create an enabled item in an static banner that already has an item enabled");
+                                                    Mage::getSingleton("adminhtml/session")->setBannerData($this->getRequest()->getPost());
+                                                    $this->_redirect("*/*/edit", array("id" => $this->getRequest()->getParam("id")));
+                                                return;
+                                                }
+                                                //echo "<pre>";print_r($_FILES);die;
+                                                if(!$_FILES['item_url']['error']){
                                                     $item=$_FILES['item_url'];
                                                     $target_path = "media/banners/";
 
@@ -92,6 +121,10 @@ class Conzentra_Bannermanager_Adminhtml_BanneritemController extends Mage_Adminh
                                                     move_uploaded_file($item['tmp_name'], $target_path);
 
                                                     $post_data['item_url']=$post_data['id_banner'].$item['name'];
+                                                }
+                                                else{
+                                                    $item = Mage::getModel("bannermanager/banneritem")->load($this->getRequest()->getParam("id"));
+                                                    $post_data['item_url']=$item->getItem_url();
                                                 }
 						$brandsModel = Mage::getModel("bannermanager/banneritem")
 						->addData($post_data)

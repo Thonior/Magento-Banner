@@ -53,6 +53,13 @@ class Conzentra_Bannermanager_Block_Adminhtml_Banner_Edit_Tab_Form extends Mage_
                                 "values" => array("Static" => "Static","Ordered" => "Ordered","Random" => "Random"),
 				"name" => "behaviour",
 				));
+                                $fieldset->addField("arrows", "select", array(
+				"label" => Mage::helper("bannermanager")->__("Enable switch"),
+				"class" => "",
+				"required" => false,
+                                "values" => array("No","Yes"),
+				"name" => "arrows",
+                                ));
                                 if (!Mage::app()->isSingleStoreMode()) {
                                     $fieldset->addField('store_id', 'multiselect', array(
                                             'name'      => 'stores[]',

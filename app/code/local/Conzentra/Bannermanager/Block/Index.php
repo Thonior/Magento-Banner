@@ -17,6 +17,8 @@ class Conzentra_Bannermanager_Block_Index extends Mage_Core_Block_Template{
         $collection = Mage::getModel('bannermanager/banneritem')->getCollection();
         $collection->addFieldToFilter('id_banner',$bannerId);
         $collection->addFieldToFilter('status',1);
+        //echo "<pre>";print_r(get_class_methods($collection));die;
+        $collection->addOrder('position', 'ASC');
         $items = $collection;
         if($items)
             return $items;

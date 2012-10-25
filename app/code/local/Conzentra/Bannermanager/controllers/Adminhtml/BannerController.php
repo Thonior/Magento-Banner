@@ -69,6 +69,23 @@ class Conzentra_Bannermanager_Adminhtml_BannerController extends Mage_Adminhtml_
 				if ($post_data) {
                                     //echo "<pre>";print_r($post_data);die;
                                     if(isset($post_data['stores'])) {
+                                        //COMPROBAR QUE SOLO HAY UN BANNER POR POSICIÓN Y POR TIENDA
+                                        $valid = true;
+                                        $collection = Mage::getModel('bannermanager/banner')->getCollection();
+                                        $collection->addFieldToFilter('position',$post_data['position']);
+                                        $collection->addFieldToFilter('status',1);
+                                        $banners = $collection;
+                                        $newStores = explode(',', $post_data['stores']);
+                                        foreach ($banners as $banner){
+                                            $itemStores = $banner->getStoreId();
+                                            $stores = explode(',', $itemStores);
+                                            foreach($newStores as $store){
+                                                if(in_array($store, $stores) || in_array(0, $stores))
+                                                    $valid = false;
+                                            }
+                                        }
+                                                                           
+                                        //COMPROBADO
                                         $stores = $post_data['stores'];
                                         $storesCount = count($stores);
                                         $storesIndex = 1;
@@ -85,6 +102,12 @@ class Conzentra_Bannermanager_Adminhtml_BannerController extends Mage_Adminhtml_
                                     }
 
 					try {
+                                                if(!$valid){
+                                                    Mage::getSingleton("adminhtml/session")->addError("You cannot create a banner in the same store and position than other");
+                                                    Mage::getSingleton("adminhtml/session")->setBannerData($this->getRequest()->getPost());
+                                                    $this->_redirect("*/*/edit", array("id" => $this->getRequest()->getParam("id")));
+                                                return;
+                                                }
 
 						$brandsModel = Mage::getModel("bannermanager/banner")
 						->addData($post_data)
